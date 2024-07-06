@@ -4,7 +4,7 @@
 
 void generateBillHeader(char name[50],char date[30]){
     printf("\n\n");
-        printf("\t    ADV. Restaurant");
+        printf("\t    TKAYY. Restaurant");
         printf("\n\t   -----------------");
         printf("\nDate:%s",date);
         printf("\nInvoice To: %s",name);
@@ -39,4 +39,21 @@ void generateBillFooter(float total){
     printf("\n---------------------------------------");
     printf("\nGrand Total\t\t\t%.2f",grandTotal);
     printf("\n---------------------------------------\n");
+}
+
+int main()
+{
+    int option;
+    // dashboard
+    printf("\t==========TKAYY. RESTAURANT==========");
+    printf("\n\n1. Generate Invoice");
+    printf("\n\n2. Show all Invoices");
+    printf("\n\n3. Search Invoice");
+    printf("\n\n4. Exit");
+
+    printf("\n\nPlease select yout preferred operation\t\t");
+    scanf("%d", &option);
+    
+    printf("\n\n");
+    return 0;
 }
