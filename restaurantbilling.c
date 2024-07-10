@@ -73,8 +73,12 @@ int main()
 {
     int option;
     struct orders ord;
+    struct orders order;
     int n;
     float total;
+    FILE *fp;
+    char saveBill = 'y';
+
 
     displayDashbord();
 
@@ -85,6 +89,7 @@ int main()
     switch (option)
     {
     case 1:
+        system("clear");
         printf("\nPlease enter the name of the customer:\t");
         fgets(ord.customer, 50, stdin);
         ord.customer[strlen(ord.customer) - 1] = 0;
@@ -111,7 +116,41 @@ int main()
             generateBillBody(ord.itm[i].item, ord.itm[i].qty, ord.itm[i].price);
         }
         generateBillFooter(total);
+
+        printf("\nDo you want to save the invoice [y/n]:\t");
+        scanf("%s",&saveBill);
+        
+        if(saveBill == 'y')
+        {
+            fp = fopen("RestaurantBill.dat", "a+");
+            fwrite(&ord, sizeof(struct orders), 1, fp);
+            if(&fwrite != 0)
+                printf("\nSuccessfully saved");
+            else
+                printf("\nError saving");
+            fclose(fp);
+        }
+        break;
+
+        case 2:
+            system("clear");
+            fp = fopen("RestaurantBill.dat", "r");
+            printf("\n *********Your Previous Invoives********");
+            while(fread(&order, sizeof(struct orders), 1, fp))
+            {
+                float tot = 0;
+                generateBillHeader(order.customer, order.date);
+                for(int i =0; i < order.numberOfItems; i++)
+                {
+                    generateBillBody(order.itm[i].item, order.itm[i].qty, order.itm[i].price);
+                    tot += order.itm[i].qty * order.itm[i].price;
+                }
+                generateBillFooter(tot);
+            }
+            fclose(fp);
+            break;
     }
+
 
     printf("\n\n");
     return 0;
